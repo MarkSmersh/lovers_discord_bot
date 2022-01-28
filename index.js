@@ -92,5 +92,5 @@ client.on('interactionCreate', async e => {
     
 })
 
-// client.login('OTM0NTQxNjAxMTc3NDY4OTI5.YexlsA.802LLAEuaiM_qvplpQIfxkarMiA');
-client.login(process.env.token);
+client.login('OTM0NTQxNjAxMTc3NDY4OTI5.YexlsA.802LLAEuaiM_qvplpQIfxkarMiA');
+// client.login(process.env.token);
