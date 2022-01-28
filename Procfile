@@ -1,1 +1,1 @@
-Worker: node index.js;
+BlackWorker: node index.js;
