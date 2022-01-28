@@ -1,1 +1,1 @@
-Worker: node addMessageWithEmojiButtons.js;
+Worker: node index.js;
