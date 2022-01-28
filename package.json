@@ -3,6 +3,26 @@
     "@discordjs/rest": "^0.2.0-canary.0",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
-    "express": "^4.17.2"
-  }
+    "express": "^4.17.2",
+    "server.js": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "lovers_discord_bot",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkSmersh/lovers_discord_bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarkSmersh/lovers_discord_bot/issues"
+  },
+  "homepage": "https://github.com/MarkSmersh/lovers_discord_bot#readme"
 }

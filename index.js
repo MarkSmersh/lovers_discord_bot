@@ -48,4 +48,5 @@ client.on('messageReactionAdd', async (reaction, user) => {
     console.log(reaction.emoji.id)
 });
 
-client.login('OTM0NTQxNjAxMTc3NDY4OTI5.YexlsA.802LLAEuaiM_qvplpQIfxkarMiA');
+client.login(process.env.token);
+// client.login('OTM0NTQxNjAxMTc3NDY4OTI5.YexlsA.802LLAEuaiM_qvplpQIfxkarMiA');
