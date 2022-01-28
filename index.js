@@ -1,4 +1,4 @@
-const { Client, Intents, MessageActionRow, MessageButton, MessageEmbed } = require('./node_modules/discord.js');
+const { Client, Intents, MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const fs = require ('fs')
 
 const client = new Client(
