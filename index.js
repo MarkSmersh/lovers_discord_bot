@@ -1,96 +1,68 @@
-const { Client, Intents, MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
-const fs = require ('fs')
+const { Client, Intents } = require('discord.js');
+const { token, created } = require('./config.json')
+const fs = require('fs')
+const interactionCreate = require('./events/guild/interactionCreate')
+const roleOnButton = require('./functions/roleOnButton')
+const roleOnEmoji = require ('./functions/roleOnEmoji')
+const messageReactionAdd = require('./events/guild/messageReactionAdd')
+const messageReactionRemove = require('./events/guild/messageReactionRemove')
+const emojiEmbed = require('./embeds/emoji')
+const buttonsEmbed = require('./embeds/buttons')
 
 const client = new Client(
-    { 
-        intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+    {
+        intents: 
+        [
+            Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,
+            Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+        ],
         partials: ['MESSAGE', 'CHANNEL', 'REACTION']
     });
-
-    
-function addMessageWithEmojiButtons () {
-    // client.channels.cache.get(channel).send('123')
-    const tChannel = client.channels.cache.get('934988881361768458');
-    // console.log(tChannel)
-    
-    const genderRow = new MessageActionRow().addComponents(
-        
-        new MessageButton()
-        .setCustomId('male')
-        .setLabel('Мужской пол')
-        .setStyle('SECONDARY')
-        .setEmoji('935219891458437191'),
-        
-        new MessageButton()
-        .setCustomId('female')
-        .setLabel('Женский пол')
-        .setStyle('SECONDARY')
-        .setEmoji('935218733448839169'),   
-        
-        )
-        const embed = new MessageEmbed()
-        .setColor('#f100ff')
-        .setTitle('Добро пожаловать на наш сервер!')
-        .setURL('')
-        .setDescription(`Здесь Вы найдете не просто интересных собеседников и собеседниц, а даже, возможно, Вашу вторую половинку.
-        
-        Для получения роли пола, нажмите на соответствующий эмодзи под данным сообщением. Если Вы хотите пройти верификацию, оставьте обращение в
-        <#934351643649146921>
-        
-        Приятного общения и хорошего времяпрепровождения!
-        
-        - С уважением, администрация L0VERS`);
-        
-        tChannel.send({ components: [genderRow], embeds: [embed] })
-        
-    }
         
 client.once('ready', c => {
     console.log(`${c.user.tag} - запущен`);
-    // addMessageWithEmojiButtons()
-    // client.destroy()
+    if (!created) {
+        roleOnButton
+        (
+            client,
+            '934357390025965608',
+            [['male', 'Я парень', 'SECONDARY', '935219891458437191'], ['female', 'Я девушка', 'SECONDARY', '935218733448839169']],
+            buttonsEmbed,
+            ['934062265609625631', '934062286128164905']
+        )
+        roleOnEmoji 
+        (
+            client,
+            '934373313218773044',
+            emojiEmbed,
+            [   
+                '937324518081433621', '937356595938070538', '937614589103857704', '937379083136938044', 
+                '939187544841674802', '939187598075756544', '939187689511591997', '939188103455834172', 
+                '939187930268835943', '939187130322812979'
+            ],
+            [
+                '934368148860321842', '934367977866928209', '934368518907002882', '934888593577639937',
+                '934888587160346665', '934368066421272626', '934381681471807529', '934367864536834058',
+                '934564374511747133', '934368243152470077'
+            ]
+        )
+        const data = JSON.parse(fs.readFileSync('config.json'))
+        data['created'] = true
+        fs.writeFileSync('config.json', JSON.stringify(data))
+    }
 });
-        
-function indexOfArrays (arr1, arr2) {
-    var index = []
-    
-    arr1.forEach(el => {
-        i = arr2.indexOf(el)
-        if (i !== -1) index.push(i)
-    });
-    
-    if (index.length !== 0) {
-        return index
-    }
-    else {
-        return false
-    }
-}
 
 client.on('interactionCreate', async e => {
-    if (!e.isButton()) return
-    e.deferUpdate()
-    
-    let rawdata = fs.readFileSync('buttons_roles.json');
-    
-    var data = JSON.parse(rawdata);
-    var filteredRole = data[e.guildId][e.channelId][e.message.id][e.customId]
-    
-    if (e.member._roles.includes(filteredRole)) return
-    
-    var anotherRoles = data[e.guildId][e.channelId][e.message.id]['all'].filter(item => item !== filteredRole)
-    var coincidenceRoles = indexOfArrays(anotherRoles, e.member._roles)
-    
-    if (!!coincidenceRoles) {
-        coincidenceRoles.forEach(i => {
-            var role = e.guild.roles.cache.find(role => role.id == e.member._roles[i]);
-            e.member.roles.remove(role)
-        })
-    }
-    
-    e.member.roles.add(e.guild.roles.cache.find(role => role.id == filteredRole))
-    
+    interactionCreate(e, client)
 })
 
-client.login('OTM0NTQxNjAxMTc3NDY4OTI5.YexlsA.802LLAEuaiM_qvplpQIfxkarMiA');
+client.on('messageReactionAdd', (e, user) => {
+    messageReactionAdd(e, user, client)
+})
+
+client.on('messageReactionRemove', (e, user) => {
+    messageReactionRemove(e, user, client)
+})
+
+client.login(token);
 // client.login(process.env.token);
