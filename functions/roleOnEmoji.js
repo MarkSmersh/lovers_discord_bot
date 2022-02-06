@@ -1,5 +1,5 @@
 const addMessageWithEmojiReactions = require('./addMessageWithEmojiReactions')
-const emojiFilter = 'reactions_roles.json'
+const emojiFilter = 'reactions_roles'
 const rolesConstructor = require('./rolesConstructor')
 
 async function roleOnEmoji (client, channel, embed, emoji, roles) {

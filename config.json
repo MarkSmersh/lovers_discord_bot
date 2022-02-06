@@ -1,10 +1,16 @@
 {
-    "token": "OTM5NTUxMjg2Nzc1NDE0ODY0.Yf6fUg.fsJ3gPReFdP-QRDAEegCS1rPWDo",
+    "token": "OTM0NTQxNjAxMTc3NDY4OTI5.YexlsA.802LLAEuaiM_qvplpQIfxkarMiA",
     "sql": {
         "host": "localhost",
         "user": "root",
         "password": "1a2b3c4d",
         "database": "lovers_discord_bot"
     },
-    "created": false
+    "mongo": {
+        "user": "MarkSmersh",
+        "password": "1a2b3c4d",
+        "organisation": "lovers",
+        "cluster": "lovers",
+        "database": "lovers_discord_bot"
+    }
 }

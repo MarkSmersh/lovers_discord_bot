@@ -1,9 +1,14 @@
 const fs = require('fs')
-const rolesFilter = 'buttons_roles.json'
 const rolesFiltering = require('../../functions/rolesFiltering')
+const rolesFilter = 'buttons_roles'
 
 module.exports = async (e, client) => {
     e.deferUpdate()
-    var buttonsFilter = await JSON.parse(fs.readFileSync(rolesFilter))
-    if (e.isButton()) rolesFiltering(e, buttonsFilter, 'button', false, true)
+    // var buttonsFilter = await JSON.parse(fs.readFileSync(rolesFilter))
+    const db = await client.mongoDB.connect()
+    const data = await db.collection(rolesFilter).findOne({})
+    delete data['_id']
+    await client.mongoDB.client.close()
+
+    if (e.isButton()) rolesFiltering(e, client, data, 'button', false, true)
 }

@@ -1,8 +1,12 @@
 const fs = require('fs')
+const MongoDB = require('../functions/getMongoDB')
 
-async function rolesConstructor (message, identificator, roles, file, type) {
+async function rolesConstructor (message, identificator, roles, uri, type) {
 
-    const data = await JSON.parse(fs.readFileSync(file)) 
+    const mongo = new MongoDB
+    const db = await mongo.connect()
+    const data = await db.collection(uri).findOne({})
+    delete data['_id']
 
     var indexOfFilter = ['guildId', 'channelId', 'id']
     var current = data
@@ -27,7 +31,10 @@ async function rolesConstructor (message, identificator, roles, file, type) {
     }
     current['all'] = roles
 
-    return fs.writeFileSync(file, JSON.stringify(data))
+    db.collection(uri).updateOne({}, {$set: data}, (err) => {
+        if (err) throw new error (err)
+        mongo.client.close()
+    })
 }
 
 module.exports = rolesConstructor

@@ -1,5 +1,5 @@
 const addMessageWithEmojiButtons = require('./addMessageWithEmojiButtons')
-const buttonFilter = 'buttons_roles.json'
+const buttonFilter = 'buttons_roles'
 const rolesConstructor = require('./rolesConstructor')
 
 

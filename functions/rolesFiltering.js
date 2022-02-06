@@ -14,7 +14,7 @@ function indexOfArrays (arr1, arr2) {
     }
 }
 
-async function rolesFiltering (e, filter, type, user = false, oneSide = false, isRemove = false) {
+async function rolesFiltering (e, client, filter, type, user = false, oneSide = false, isRemove = false) {
     if 
     (type === 'button') {
 
