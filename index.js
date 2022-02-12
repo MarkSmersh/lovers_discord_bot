@@ -6,9 +6,10 @@ const roleOnButton = require('./functions/roleOnButton')
 const roleOnEmoji = require ('./functions/roleOnEmoji')
 const messageReactionAdd = require('./events/guild/messageReactionAdd')
 const messageReactionRemove = require('./events/guild/messageReactionRemove')
-// const voiceStateUpdate = require('./events/guild/voiceStateUpdate')
+const voiceStateUpdate = require('./events/guild/voiceStateUpdate')
 const emojiEmbed = require('./embeds/emoji')
 const buttonsEmbed = require('./embeds/buttons')
+const buttonsEmbed2 = require('./embeds/ua_buttons')
 const MongoDB = require('./functions/getMongoDB')
 
 const client = new Client(
@@ -32,26 +33,18 @@ client.once ('ready', async c => {
         roleOnButton
         (
             client,
-            '934357390025965608',
-            [['male', 'Я парень', 'SECONDARY', '935219891458437191'], ['female', 'Я девушка', 'SECONDARY', '935218733448839169']],
+            '942151536472113182',
+            [['male', 'Я парень', 'SECONDARY', '749427098501906472'], ['female', 'Я woman', 'SECONDARY', '749424828326346855']],
             buttonsEmbed,
-            ['934062265609625631', '934062286128164905']
+            ['749462520816730242', '768106102206234656']
         )
-        roleOnEmoji 
+        roleOnButton
         (
             client,
-            '934373313218773044',
-            emojiEmbed,
-            [   
-                '937324518081433621', '937356595938070538', '937614589103857704', '937379083136938044', 
-                '939187544841674802', '939187598075756544', '939187689511591997', '939188103455834172', 
-                '939187930268835943', '939187130322812979'
-            ],
-            [
-                '934368148860321842', '934367977866928209', '934368518907002882', '934888593577639937',
-                '934888587160346665', '934368066421272626', '934381681471807529', '934367864536834058',
-                '934564374511747133', '934368243152470077'
-            ]
+            '942151536472113182',
+            [['ua', 'UA', 'SECONDARY', ''], ['ru', 'RU', 'SECONDARY', ''], ['kz', 'KZ', 'SECONDARY', '']],
+            buttonsEmbed2,
+            ['768101951693914152', '768102282771431514', '942168717893173339']
         )
     }
         data['created'] = true
@@ -75,9 +68,10 @@ client.on('messageReactionRemove', (e, user) => {
     messageReactionRemove(e, user, client)
 })
 
-// client.on('voiceStateUpdate', (oldState, newState) => {
-//     voiceStateUpdate(oldState, newState, client)
-// })
+client.on('voiceStateUpdate', (oldState, newState) => {
+    voiceStateUpdate(oldState, newState, client)
+})
 
 client.login(token);
+
 // client.login(process.env.token);

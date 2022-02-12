@@ -1,9 +1,9 @@
 const createChannelOnJoin = require('../../functions/createChannelOnJoin')
-const tChannel = ['939561541127274536', null]
+// const tChannel = ['942087275104317480', null]
+const channelsFilter = 'created_channels'
 
-module.exports = (oldState, newState, client) => {
-    if (tChannel.includes(oldState.channel) || tChannel.includes(newState.channel)) return
+module.exports = async (oldState, newState, client) => {
 
-    if (oldState.channel !== null) createChannelOnJoin(client, oldState, true)
-    else if (newState.channel !== null) createChannelOnJoin(client, newState)
+    if (oldState.channel !== null)      createChannelOnJoin(client, oldState,channelsFilter, true)
+    else if (newState.channel !== null) createChannelOnJoin(client, newState, channelsFilter)
 }
